@@ -13,17 +13,17 @@ import java.util.zip.ZipInputStream;
 
 public class ZipArchiveLoader {
     private static final Logger LOGGER = Logger.getLogger(ZipArchiveLoader.class.getName());
-    private static ZipArchiveLoader INSTANCE;
+    private static ZipArchiveLoader instance;
 
     private ZipArchiveLoader() {
     }
 
     public static ZipArchiveLoader getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ZipArchiveLoader();
+        if (instance == null) {
+            instance = new ZipArchiveLoader();
         }
 
-        return INSTANCE;
+        return instance;
     }
 
     public List<byte[]> load(String zipFilePath) throws ZipArchiveLoaderException {
@@ -53,7 +53,7 @@ public class ZipArchiveLoader {
                             LOGGER.finest("Loaded file [" + name + "], bytes read=" + fileBytes.length);
                         }
 
-                        if (size != fileBytes.length) {
+                        if (size != fileBytes.length && LOGGER.isLoggable(Level.WARNING)) {
                             LOGGER.warning("Mismatch between read bytes (" + fileBytes.length + ") and expected file length (" + size + ")!");
                         }
 

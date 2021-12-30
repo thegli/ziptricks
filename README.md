@@ -24,5 +24,5 @@ mvn clean package
 The main class `Main` provides a simple loader where the first program argument is taken as zip file path, e.g.
 
 ``` shell
-java -jar target/ziptricks-1.0.0-SNAPSHOT.jar src/test/resources/flat.zip
+java -jar target/ziptricks-1.0.1-SNAPSHOT.jar src/test/resources/flat.zip
 ```

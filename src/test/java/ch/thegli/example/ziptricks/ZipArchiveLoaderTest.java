@@ -2,7 +2,6 @@ package ch.thegli.example.ziptricks;
 
 import ch.thegli.example.ziptricks.zip.ZipArchiveLoader;
 import ch.thegli.example.ziptricks.zip.ZipArchiveLoaderException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ZipArchiveLoaderTest {
 
@@ -33,7 +35,7 @@ class ZipArchiveLoaderTest {
 
         List<byte[]> contents = ZipArchiveLoader.getInstance().load(validZipFile);
 
-        Assertions.assertEquals(4, contents.size());
+        assertEquals(4, contents.size());
         assertContents(contents);
     }
 
@@ -43,7 +45,7 @@ class ZipArchiveLoaderTest {
 
         List<byte[]> contents = ZipArchiveLoader.getInstance().load(withDirectoriesZipFile);
 
-        Assertions.assertEquals(3, contents.size());
+        assertEquals(3, contents.size());
         assertContents(contents);
     }
 
@@ -53,7 +55,7 @@ class ZipArchiveLoaderTest {
 
         List<byte[]> contents = ZipArchiveLoader.getInstance().load(validBigZipFile);
 
-        Assertions.assertEquals(6, contents.size());
+        assertEquals(6, contents.size());
         assertContents(contents);
     }
 
@@ -63,7 +65,7 @@ class ZipArchiveLoaderTest {
 
         List<byte[]> contents = ZipArchiveLoader.getInstance().load(noZipFile);
 
-        Assertions.assertTrue(contents.isEmpty());
+        assertTrue(contents.isEmpty());
     }
 
     @Test
@@ -96,8 +98,8 @@ class ZipArchiveLoaderTest {
 
     private void assertContents(List<byte[]> contents) {
         for (byte[] content : contents) {
-            Assertions.assertNotNull(content);
-            Assertions.assertTrue(content.length > 0);
+            assertNotNull(content);
+            assertTrue(content.length > 0);
         }
     }
 }
