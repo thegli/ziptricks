@@ -38,9 +38,7 @@ public class ZipArchiveLoader {
                 if (!entry.isDirectory()) {
                     String name = entry.getName();
                     long size = entry.getSize();
-                    if (LOGGER.isLoggable(Level.FINEST)) {
-                        LOGGER.finest("Next file from ZIP archive to load: [" + name + "], size=" + size);
-                    }
+                    LOGGER.log(Level.FINEST, "Next file from ZIP archive to load: [{0}], size={1}", new Object[]{name, size});
 
                     int len;
                     try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -49,12 +47,10 @@ public class ZipArchiveLoader {
                         }
 
                         final byte[] fileBytes = out.toByteArray();
-                        if (LOGGER.isLoggable(Level.FINEST)) {
-                            LOGGER.finest("Loaded file [" + name + "], bytes read=" + fileBytes.length);
-                        }
+                        LOGGER.log(Level.FINEST, "Loaded file [{0}], bytes read={1}", new Object[]{name, fileBytes.length});
 
-                        if (size != fileBytes.length && LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.warning("Mismatch between read bytes (" + fileBytes.length + ") and expected file length (" + size + ")!");
+                        if (size != fileBytes.length) {
+                            LOGGER.log(Level.WARNING, "Mismatch between read bytes ({0}) and expected file length ({1})!", new Object[]{fileBytes.length, size});
                         }
 
                         fileContents.add(fileBytes);
@@ -63,9 +59,7 @@ public class ZipArchiveLoader {
 
                 entry = zis.getNextEntry();
             }
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.fine("Total loaded files from ZIP archive [" + zipFile.getAbsolutePath() + "]: " + fileContents.size());
-            }
+            LOGGER.log(Level.FINE, "Total loaded files from ZIP archive [{0}]: {1}", new Object[]{zipFile.getAbsolutePath(), fileContents.size()});
         } catch (IOException ioe) {
             String errorMsg = "Failed to load content from zip file due to IOException: " + ioe.getMessage();
             LOGGER.severe(errorMsg);
@@ -89,9 +83,7 @@ public class ZipArchiveLoader {
             throw new ZipArchiveLoaderException(errorMsg);
         }
 
-        if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.finest("Created handle for file [" + zipFile.getAbsolutePath() + "]");
-        }
+        LOGGER.log(Level.FINEST, "Created handle for file [{0}]", zipFile.getAbsolutePath());
         return zipFile;
     }
 }

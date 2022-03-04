@@ -23,7 +23,7 @@ class ZipArchiveLoaderTest {
      */
     @BeforeAll
     static void initLogging() {
-        final Level logLevel = Level.INFO;
+        final Level logLevel = Level.FINEST;
         final Logger rootLogger = LogManager.getLogManager().getLogger("");
         rootLogger.setLevel(logLevel);
         Arrays.stream(rootLogger.getHandlers()).forEach(h -> h.setLevel(logLevel));

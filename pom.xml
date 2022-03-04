@@ -6,7 +6,7 @@
 
     <groupId>ch.thegli.example</groupId>
     <artifactId>ziptricks</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>ZipTricks</name>
     <description>Sample application to demonstrate the loading of files from a zip archive using java.util.zip
