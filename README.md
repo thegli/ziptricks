@@ -5,7 +5,7 @@ A small Java application to demonstrate the loading of file entries of a zip arc
 ## Requirements
 
 Java 8 or higher.  
-Maven is used for dependency and build  management, but besides JUnit no 3rd-party libraries are required.
+Maven is used for dependency and build management, but besides JUnit no 3rd-party libraries are required.
 
 ## Testing
 
