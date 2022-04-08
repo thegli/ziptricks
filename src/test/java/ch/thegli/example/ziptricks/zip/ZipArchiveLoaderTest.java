@@ -1,7 +1,5 @@
-package ch.thegli.example.ziptricks;
+package ch.thegli.example.ziptricks.zip;
 
-import ch.thegli.example.ziptricks.zip.ZipArchiveLoader;
-import ch.thegli.example.ziptricks.zip.ZipArchiveLoaderException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ZipArchiveLoaderTest {
 
@@ -72,24 +67,34 @@ class ZipArchiveLoaderTest {
     void corruptZipFile() {
         String corruptZipFile = getTestFilePath("corrupt.zip");
 
-        assertThrows(ZipArchiveLoaderException.class,
+        ZipArchiveLoaderException e = assertThrows(ZipArchiveLoaderException.class,
                 () -> ZipArchiveLoader.getInstance().load(corruptZipFile));
+        assertTrue(e.getMessage().startsWith("Failed to load content from zip file due to IOException:"));
     }
 
     @Test
     void fileIsDirectory() {
         String directoryFile = getTestFilePath("");
 
-        assertThrows(ZipArchiveLoaderException.class,
+        ZipArchiveLoaderException e = assertThrows(ZipArchiveLoaderException.class,
                 () -> ZipArchiveLoader.getInstance().load(directoryFile));
+        assertEquals("Given file path [" + directoryFile + "] does not denote a readable file!", e.getMessage());
     }
 
     @Test
     void fileDoesNotExist() {
         String unknownFile = getTestFilePath("this-file-does-not-exist");
 
-        assertThrows(ZipArchiveLoaderException.class,
+        ZipArchiveLoaderException e = assertThrows(ZipArchiveLoaderException.class,
                 () -> ZipArchiveLoader.getInstance().load(unknownFile));
+        assertEquals("Given file path [" + unknownFile + "] does not denote a readable file!", e.getMessage());
+    }
+
+    @Test
+    void nullFile() {
+        ZipArchiveLoaderException e = assertThrows(ZipArchiveLoaderException.class,
+                () -> ZipArchiveLoader.getInstance().load(null));
+        assertEquals("No zip file path given!", e.getMessage());
     }
 
     private String getTestFilePath(String filename) {
